@@ -30,148 +30,156 @@ while winner is None:
     gameDisplay.blit(mainFont.render('PLAYER ' + str(player_turn.number) + '\'S TURN', 1, WHITE), (600, 10))
     draw_potted_balls()
     for ball in balls:
-        if not ball.potted:
-            gameDisplay.blit(ball.sprite, (ball.x - 18, ball.y - 18))
-            if in_play:
-                if ball.speed > 0:
-                    for i in range(int(ball.speed)):
-                        if ball.y - 18 <= 150 or ball.y + 18 >= 650 or ball.x + 18 >= 1200 or ball.x - 18 <= 200:
-                            # TODO: PLAY SOUND HERE
-                            if ball.speed > 1:  
-                                ball.speed -= 1
-                            ball.movement_direction = collision_with_wall(
-                                ball.x, ball.y, ball.movement_direction)
-                            collision_monitor_reset()
-                        ball.x, ball.y = angle_to_coordinates(
-                            ball.x, ball.y, ball.movement_direction, 1)
-                    if ball_potted(ball.x, ball.y):  
-                        # TODO: PLAY SOUND HERE
-                        recent_potted_balls.append(ball)
-                        potted_balls.append(ball)
-                        ball.potted = True
-                        
-                    ball_collided_with = check_collision_with_other_ball(
-                        ball.x, ball.y, ball)
-                    if ball_collided_with is not None:  
-                        # TODO: PLAY SOUND HERE
-                        if first_ball_collided_with is None:  
-                            first_ball_collided_with = ball_collided_with
-                        ball.movement_direction, ball_collided_with.movement_direction, ball.speed, ball_collided_with.speed = ball_collision_physics(
-                            ball.x, ball.y, ball_collided_with.x, ball_collided_with.y, ball.movement_direction, ball.speed)
-                        collision_monitor_reset()
-                        ball.collision_monitor[balls.index(
-                            ball_collided_with)] = True
-                        ball_collided_with.collision_monitor[balls.index(
-                            ball)] = True
+        # Ignore potted balls
+        if ball.potted:
+            continue
 
-                    # ma sat
-                    if ball.frames >= (-30) * math.log10(0.05 * (ball.speed + 1)):
-                        ball.speed -= 0.5
-                        ball.frames = 0
-                    ball.frames += 1
+        gameDisplay.blit(ball.sprite, (ball.x - 18, ball.y - 18))
 
-                    if ball is cue_ball:
-                        pool_cue_coords = (cue_ball.x - 462, cue_ball.y - 450)
-               
-                if balls_stopped():
-                    draw_background()
-                    draw_potted_balls()
-                    for ball in balls:
-                        if not ball.potted:
-                            gameDisplay.blit(ball.sprite, (ball.x - 18, ball.y - 18))
-                    pygame.display.update()
-                    time.sleep(0.5)
+        # Nothing to do if the ball is not in play
+        if not in_play:
+            continue
 
-                    
-                    # kiem tra bong vao lo
-                    stripes, solids = 0, 0
-                    for ball in recent_potted_balls:
-                        if ball.color == 'stripes':
-                            stripes += 1
-                            if initial_break:
-                                initial_break = False
-                                turn_change = False
-                                if player_turn.number == 1:
-                                    player_1.color = 'stripes'
-                                    player_2.color = 'solids'
-                                elif player_turn.number == 2:
-                                    player_2.color = 'stripes'
-                                    player_1.color = 'solids'
-                        elif ball.color == 'solids':
-                            solids += 1
-                            if initial_break:
-                                initial_break = False
-                                turn_change = False
-                                if player_turn.number == 1:
-                                    player_1.color = 'solids'
-                                    player_2.color = 'stripes'
-                                elif player_turn.number == 2:
-                                    player_2.color = 'solids'
-                                    player_1.color = 'stripes'
-                        elif ball.color == 'eight':
-                            if player_turn.only_eight_ball_left:
-                                if cue_ball.potted or not first_ball_collided_with.color == 'eight':
-                                    if player_turn.number == 1:
-                                        winner = player_2
-                                    else:
-                                        winner = player_1
-                                else:
-                                    winner = player_turn
-                            else:
-                                if player_turn.number == 1:
-                                    winner = player_2
-                                else:
-                                    winner = player_1
-                            game_over()
-                    recent_potted_balls[:] = []
+        if ball.speed > 0:
+            for i in range(int(ball.speed)):
+                if ball.y - 18 <= 150 or ball.y + 18 >= 650 or ball.x + 18 >= 1200 or ball.x - 18 <= 200:
+                    # TODO: PLAY SOUND HERE
+                    if ball.speed > 1:  
+                        ball.speed -= 1
+                    ball.movement_direction = collision_with_wall(
+                        ball.x, ball.y, ball.movement_direction)
+                    collision_monitor_reset()
+                ball.x, ball.y = angle_to_coordinates(
+                    ball.x, ball.y, ball.movement_direction, 1)
+            if ball_potted(ball.x, ball.y):  
+                # TODO: PLAY SOUND HERE
+                recent_potted_balls.append(ball)
+                potted_balls.append(ball)
+                ball.potted = True
+                
+            ball_collided_with = check_collision_with_other_ball(
+                ball.x, ball.y, ball)
+            if ball_collided_with is not None:  
+                # TODO: PLAY SOUND HERE
+                if first_ball_collided_with is None:  
+                    first_ball_collided_with = ball_collided_with
+                ball.movement_direction, ball_collided_with.movement_direction, ball.speed, ball_collided_with.speed = ball_collision_physics(
+                    ball.x, ball.y, ball_collided_with.x, ball_collided_with.y, ball.movement_direction, ball.speed)
+                collision_monitor_reset()
+                ball.collision_monitor[balls.index(
+                    ball_collided_with)] = True
+                ball_collided_with.collision_monitor[balls.index(
+                    ball)] = True
 
-                    # kiem tra doi turn 
-                    if player_turn.only_eight_ball_left:
-                        turn_change = True
-                        cue_ball_in_hand = False
-                        if first_ball_collided_with is not None:
-                            if not first_ball_collided_with.color == 'eight':
-                                cue_ball_in_hand = True
+            # ma sat
+            if ball.frames >= (-30) * math.log10(0.05 * (ball.speed + 1)):
+                ball.speed -= 0.5
+                ball.frames = 0
+            ball.frames += 1
+
+            if ball is cue_ball:
+                pool_cue_coords = (cue_ball.x - 462, cue_ball.y - 450)
+        
+        if not balls_stopped():
+            continue
+
+        draw_background()
+        draw_potted_balls()
+        for ball in balls:
+            if not ball.potted:
+                gameDisplay.blit(ball.sprite, (ball.x - 18, ball.y - 18))
+        pygame.display.update()
+        time.sleep(0.5)
+
+        # kiem tra bong vao lo
+        stripes, solids = 0, 0
+        for ball in recent_potted_balls:
+            if ball.color == 'stripes':
+                stripes += 1
+                if initial_break:
+                    initial_break = False
+                    turn_change = False
+                    if player_turn.number == 1:
+                        player_1.color = 'stripes'
+                        player_2.color = 'solids'
+                    elif player_turn.number == 2:
+                        player_2.color = 'stripes'
+                        player_1.color = 'solids'
+            elif ball.color == 'solids':
+                solids += 1
+                if initial_break:
+                    initial_break = False
+                    turn_change = False
+                    if player_turn.number == 1:
+                        player_1.color = 'solids'
+                        player_2.color = 'stripes'
+                    elif player_turn.number == 2:
+                        player_2.color = 'solids'
+                        player_1.color = 'stripes'
+            elif ball.color == 'eight':
+                if player_turn.only_eight_ball_left:
+                    if cue_ball.potted or not first_ball_collided_with.color == 'eight':
+                        if player_turn.number == 1:
+                            winner = player_2
                         else:
-                            cue_ball_in_hand = True
+                            winner = player_1
                     else:
-                        if player_turn.color == 'stripes':
-                            if stripes > 0:
-                                turn_change = False
-                            else:
-                                turn_change = True
-                        elif player_turn.color == 'solids':
-                            if solids > 0:
-                                turn_change = False
-                            else:
-                                turn_change = True
-                        if first_ball_collided_with is not None:
-                            if player_turn.color == 'stripes' and not first_ball_collided_with.color == 'stripes':
-                                turn_change = True
-                                cue_ball_in_hand = True
-                            elif player_turn.color == 'solids' and not first_ball_collided_with.color == 'solids':
-                                turn_change = True
-                                cue_ball_in_hand = True
-                        else:
-                            turn_change = True
-                            cue_ball_in_hand = True
-                        if number_of_balls_potted(player_turn.color) == 7:
-                            player_turn.only_eight_ball_left = True
-                    first_ball_collided_with = None
-                    if cue_ball.potted:
-                        potted_balls.remove(cue_ball)
-                        turn_change = True
-                        cue_ball.potted = False
-                        cue_ball_in_hand = True
+                        winner = player_turn
+                else:
+                    if player_turn.number == 1:
+                        winner = player_2
+                    else:
+                        winner = player_1
+                game_over()
+        recent_potted_balls[:] = []
 
-                    if turn_change:
-                        player_turn = player_turn_switch(player_turn)
-                    if cue_ball_in_hand:
-                        ball_in_hand()
-                        pool_cue_coords = (cue_ball.x - 462, cue_ball.y - 450)
-                        cue_ball_in_hand = False
+        # kiem tra doi turn 
+        if player_turn.only_eight_ball_left:
+            turn_change = True
+            cue_ball_in_hand = False
+            if first_ball_collided_with is not None:
+                if not first_ball_collided_with.color == 'eight':
+                    cue_ball_in_hand = True
+            else:
+                cue_ball_in_hand = True
+        else:
+            if player_turn.color == 'stripes':
+                if stripes > 0:
+                    turn_change = False
+                else:
+                    turn_change = True
+            elif player_turn.color == 'solids':
+                if solids > 0:
+                    turn_change = False
+                else:
+                    turn_change = True
+            if first_ball_collided_with is not None:
+                if player_turn.color == 'stripes' and not first_ball_collided_with.color == 'stripes':
+                    turn_change = True
+                    cue_ball_in_hand = True
+                elif player_turn.color == 'solids' and not first_ball_collided_with.color == 'solids':
+                    turn_change = True
+                    cue_ball_in_hand = True
+            else:
+                turn_change = True
+                cue_ball_in_hand = True
+            if number_of_balls_potted(player_turn.color) == 7:
+                player_turn.only_eight_ball_left = True
+        first_ball_collided_with = None
+        if cue_ball.potted:
+            potted_balls.remove(cue_ball)
+            turn_change = True
+            cue_ball.potted = False
+            cue_ball_in_hand = True
 
-                    in_play = False
+        if turn_change:
+            player_turn = player_turn_switch(player_turn)
+        if cue_ball_in_hand:
+            ball_in_hand()
+            pool_cue_coords = (cue_ball.x - 462, cue_ball.y - 450)
+            cue_ball_in_hand = False
+
+        in_play = False
 
     # AIMING 
     if not in_play:
