@@ -14,7 +14,7 @@ def draw_background():
     # Draw players info
     p1_color = config.player_1.color
     p2_color = config.player_2.color
-    config.gameDisplay.blit(config.mainFont.render('PLAYER 1', 1, config.P1), (20, 10))
-    config.gameDisplay.blit(config.mainFont.render(p1_color.upper(), 1, config.P1), (20, 50))
-    config.gameDisplay.blit(config.mainFont.render('PLAYER 2', 1, config.P2), (1260, 10))
-    config.gameDisplay.blit(config.mainFont.render(p2_color.upper(), 1, config.P2), (1260, 50))
+    config.gameDisplay.blit(config.mainFont.render('PLAYER 1', 1, config.P1), (40, 40))
+    config.gameDisplay.blit(config.mainFont.render(p1_color.upper(), 1, config.P1), (40, 80))
+    config.gameDisplay.blit(config.mainFont.render('PLAYER 2', 1, config.P2), (1260, 40))
+    config.gameDisplay.blit(config.mainFont.render(p2_color.upper(), 1, config.P2), (1260, 80))

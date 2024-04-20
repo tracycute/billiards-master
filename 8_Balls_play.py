@@ -29,7 +29,7 @@ def game_over():
 winner = None
 while winner is None:
     draw_background()
-    gameDisplay.blit(mainFont.render('PLAYER ' + str(player_turn.number) + '\'S TURN', 1, WHITE), (600, 10))
+    gameDisplay.blit(mainFont.render('PLAYER ' + str(player_turn.number) + '\'S TURN', 1, WHITE), (600, 40))
     draw_potted_balls()
     for ball in balls:
         # Ignore potted balls
