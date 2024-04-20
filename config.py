@@ -12,6 +12,22 @@ gameDisplay = pygame.display.set_mode((1400, 800))
 pygame.display.set_caption('Billiard Master')
 clock = pygame.time.Clock()
 
+walls = (
+    pygame.Rect(150, 100, 1100, 50),
+    pygame.Rect(150, 650, 1100, 50),
+    pygame.Rect(1200, 100, 50, 600),
+    pygame.Rect(150, 100, 50, 600)
+)
+
+holes = (
+    (210, 160),
+    (700, 150),
+    (1190, 160),
+    (210, 640),
+    (700, 650),
+    (1190, 640)
+)
+
 # colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
