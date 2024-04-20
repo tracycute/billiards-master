@@ -1,6 +1,8 @@
 <h2 style="text-align: center">
     IE221.O23.CNCL - Billiards Master<br>
 </h2>
+  
+  ![Untitled video - Made with Clipchamp](https://github.com/tracycute/billiards-master/assets/119116409/519e9d71-c037-4979-bfff-9f4696fa3de6)
 
 ## Giới thiệu 
 
