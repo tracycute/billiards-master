@@ -48,8 +48,15 @@ in_play = False
 # check stripes and solids was assigned
 initial_break = True
 
+# some setting
+cue_ball_in_hand = False
+turn_change = True
+first_ball_collided_with = None
+winner = None
+
 # Balls
 cue_ball = Ball('', 450, 400, 'images/ball0.png')
+cue_direction = 0
 
 balls = [
     cue_ball,
@@ -83,6 +90,11 @@ balls_9 = [
     Ball("nine", 915+36*2, 400, 'images/ball9.png')
 ]
 
+recent_potted_balls = []
+potted_balls = []
+recent_balls_9 = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+
+check_collision_recent_ball_9 = False
 
 # colors
 WHITE = (255, 255, 255)
