@@ -9,6 +9,8 @@ from config import *
 
 pygame.init()
 
+is_paused = False
+
 def game_over():
     global draw_background
     while True:
@@ -21,6 +23,25 @@ def game_over():
             if not b.potted:
                 gameDisplay.blit(b.sprite, (b.x - 18, b.y - 18))
         gameDisplay.blit(mainFont.render('PLAYER ' + str(winner.color) + ' WINS!', 1, RED), (615, 390))
+        pygame.display.update()
+
+def draw_pause_menu():
+    global is_paused, draw_background
+    while is_paused:
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            # Unpause game if 'p' is pressed
+            if e.type == pygame.KEYDOWN:
+                if e.key == pygame.K_p:
+                    is_paused = not is_paused
+                    return
+
+        draw_background()
+        gameDisplay.blit(menuFont.render('PAUSED', 1, WHITE), (615, 390))
+        gameDisplay.blit(menuFont.render('PRESS P TO UNPAUSE', 1, WHITE), (500, 450))
         pygame.display.update()
 
 
@@ -210,26 +231,37 @@ while winner is None:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if not in_play:
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_hold_coords = pygame.mouse.get_pos()
-                mouse_held = True
-            elif event.type == pygame.MOUSEBUTTONUP:
-                mouse_held = False
-                if strike_distance > 16:
-                    cue_ball.speed = round((strike_distance - 16)/16)
-                    in_play = True
-                    draw_guide = False
-                    # TODO: PLAY SOUND HERE
-                cue_ball.movement_direction = cue_direction
-                collision_monitor_reset()
-            elif event.type == pygame.MOUSEMOTION and mouse_held is False:
-                draw_guide = True
-                mouseX, mouseY = pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]
-                mouse_hold_coords = mouseX, mouseY
-                cue_direction = coordinates_to_angle(
-                    cue_ball.x, cue_ball.y, mouseX, mouseY)
-                pool_cue_rotated = rot_center(pool_cue_original, cue_direction)
-                pool_cue_coords = (cue_ball.x - 462, cue_ball.y - 450)
+
+        # Pause game if 'p' is pressed
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p:
+                is_paused = not is_paused
+                draw_pause_menu()
+
+        # Don't handle mouse events if the game is in play
+        if in_play:
+            continue
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_hold_coords = pygame.mouse.get_pos()
+            mouse_held = True
+        elif event.type == pygame.MOUSEBUTTONUP:
+            mouse_held = False
+            if strike_distance > 16:
+                cue_ball.speed = round((strike_distance - 16)/16)
+                in_play = True
+                draw_guide = False
+                # TODO: PLAY SOUND HERE
+            cue_ball.movement_direction = cue_direction
+            collision_monitor_reset()
+        elif event.type == pygame.MOUSEMOTION and mouse_held is False:
+            draw_guide = True
+            mouseX, mouseY = pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]
+            mouse_hold_coords = mouseX, mouseY
+            cue_direction = coordinates_to_angle(
+                cue_ball.x, cue_ball.y, mouseX, mouseY)
+            pool_cue_rotated = rot_center(pool_cue_original, cue_direction)
+            pool_cue_coords = (cue_ball.x - 462, cue_ball.y - 450)
+
     pygame.display.update()
     pygame.time.Clock().tick(60)

@@ -45,8 +45,8 @@ btns = {
         target_display=gameDisplay,
         on_click=lambda: exec(open('tutorial.py').read()),
     ),
-    'Quit': Button(
-        text="Quit",
+    'Exit': Button(
+        text="Exit",
         text_color=WHITE,
         font=menuFont,
         pos=(550, 665),
@@ -59,6 +59,10 @@ btns = {
 
 
 def menu():
+    """Main menu of the game.
+
+    This function is responsible for displaying the main menu of the game.
+    """
     global click
     while True:
         gameDisplay.fill((0, 130, 0))
