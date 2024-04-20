@@ -38,9 +38,9 @@ def ball_in_hand():
             if not ball.potted: gameDisplay.blit(ball.sprite, (ball.x - 18, ball.y - 18))
         pygame.display.update()
         for e in pygame.event.get():
-            # if e.type == pygame.QUIT:
-            #     pygame.quit()
-            #     sys.exit()
+            if e.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
             if e.type == pygame.MOUSEMOTION:
                 mouseX, mouseY = pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]
                 if 217 < mouseX < 1184 and 160 < mouseY < 634:

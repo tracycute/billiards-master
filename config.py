@@ -106,3 +106,5 @@ BRONZE = (131, 79,  22)
 BROWN = (43, 3, 18)
 P1 = (255, 5, 0)
 P2 = (255, 211, 0)
+
+game_is_paused = False

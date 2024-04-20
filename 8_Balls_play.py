@@ -6,10 +6,10 @@ from components.PoolTable import draw_background
 from components.GameState import *
 from components.Collisions import *
 from config import *
+import components.PauseMenu as PauseMenu
+import config
 
 pygame.init()
-
-is_paused = False
 
 def game_over():
     global draw_background
@@ -23,25 +23,6 @@ def game_over():
             if not b.potted:
                 gameDisplay.blit(b.sprite, (b.x - 18, b.y - 18))
         gameDisplay.blit(mainFont.render('PLAYER ' + str(winner.color) + ' WINS!', 1, RED), (615, 390))
-        pygame.display.update()
-
-def draw_pause_menu():
-    global is_paused, draw_background
-    while is_paused:
-        for e in pygame.event.get():
-            if e.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-            # Unpause game if 'p' is pressed
-            if e.type == pygame.KEYDOWN:
-                if e.key == pygame.K_p:
-                    is_paused = not is_paused
-                    return
-
-        draw_background()
-        gameDisplay.blit(menuFont.render('PAUSED', 1, WHITE), (615, 390))
-        gameDisplay.blit(menuFont.render('PRESS P TO UNPAUSE', 1, WHITE), (500, 450))
         pygame.display.update()
 
 
@@ -235,8 +216,8 @@ while winner is None:
         # Pause game if 'p' is pressed
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_p:
-                is_paused = not is_paused
-                draw_pause_menu()
+                config.game_is_paused = not config.game_is_paused
+                PauseMenu.draw_pause_menu()
 
         # Don't handle mouse events if the game is in play
         if in_play:
