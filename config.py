@@ -1,4 +1,5 @@
 import pygame
+from components import Player
 
 pygame.init()
 
@@ -27,6 +28,10 @@ holes = (
     (700, 650),
     (1190, 640)
 )
+
+# Init players
+player_1, player_2 = Player(1, ''), Player(2, '')
+player_turn = player_1
 
 # colors
 WHITE = (255, 255, 255)
