@@ -1,5 +1,5 @@
 import pygame
-from components import Player
+from components import Player, Ball
 
 pygame.init()
 
@@ -32,6 +32,57 @@ holes = (
 # Init players
 player_1, player_2 = Player(1, ''), Player(2, '')
 player_turn = player_1
+
+# pool cue
+pool_cue_original = pygame.image.load('images/cue.png').convert_alpha()
+pool_cue_rotated = pygame.transform.rotate(pool_cue_original, 0)
+pool_cue_coords = (0, 0)
+
+# mouse
+mouse_hold_coords = (0, 0)
+mouse_held = False
+
+strike_distance = 0
+draw_guide = True
+in_play = False
+# check stripes and solids was assigned
+initial_break = True
+
+# Balls
+cue_ball = Ball('', 450, 400, 'images/ball0.png')
+
+balls = [
+    cue_ball,
+    Ball('solids', 915+6, 400, 'images/ball1.png'),
+    Ball('solids', 915+36*2, 400+36, 'images/ball2.png'),  # 950 - 36, 400
+    Ball('solids', 915+36*4-6, 400+36, 'images/ball3.png'),
+    Ball('solids', 915+36*4-6, 400-36*2, 'images/ball4.png'),
+    Ball('solids', 915+36+3, 400-18, 'images/ball5.png'),
+    Ball('solids', 915+36*3-3, 400+18*3, 'images/ball6.png'),
+    Ball('solids', 915+36*3-3, 400-18*3, 'images/ball7.png'),
+    Ball('eight', 915+36*2, 400, 'images/ball8.png'),
+    Ball('stripes', 915+36*2, 400-36, 'images/ball9.png'),
+    Ball('stripes', 915+36*3-3, 400+18, 'images/ball10.png'),
+    Ball('stripes', 915+36*3-3, 400-18, 'images/ball11.png'),
+    Ball('stripes', 915+36*4-6, 400+36*2, 'images/ball12.png'),
+    Ball('stripes', 915+36*4-6, 400-36, 'images/ball13.png'),
+    Ball('stripes', 915+36+3, 400+18, 'images/ball14.png'),
+    Ball('stripes', 915+36*4-6, 400, 'images/ball15.png')
+]
+
+balls_9 = [
+    cue_ball,
+    Ball("one", 915+6, 400, 'images/ball1.png'),
+    Ball("two", 915+36+3, 400-18, 'images/ball2.png'),  # 950 - 36, 400
+    Ball("three", 915+36+3, 400+18, 'images/ball3.png'),
+    Ball("four", 915+36*2, 400+36, 'images/ball4.png'),
+    Ball("five", 915+36*2, 400-36, 'images/ball5.png'),
+    Ball("six", 915+36*3-3, 400-18, 'images/ball6.png'),
+    Ball("seven", 915+36*3-3, 400+18, 'images/ball7.png'),
+    Ball("eight", 915+36*4-6, 400, 'images/ball8.png'),
+    Ball("nine", 915+36*2, 400, 'images/ball9.png')
+]
+
 
 # colors
 WHITE = (255, 255, 255)
