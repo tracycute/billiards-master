@@ -23,7 +23,6 @@ def game_over(winner):
 
 
 while True:
-    print(config.recent_balls_9)
     draw_background()
     gameDisplay.blit(config.Fonts.basic.render('PLAYER ' + str(player_turn.number) + '\'S TURN', 1, Colors.WHITE), (600, 10))
     draw_potted_balls()

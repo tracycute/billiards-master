@@ -1,12 +1,11 @@
 import pygame
 import sys
 import config
-from utils import draw_main_menu_game_title
 from components import Button
 
 pygame.init()
 click = False
-btns_size = (300, 100)
+btns_size = (300, 80)
 
 play_btn_bg = pygame.image.load('images/menu_normal_btn_bg.png').convert_alpha()
 play_btn_bg = pygame.transform.scale(play_btn_bg, btns_size)
@@ -19,7 +18,7 @@ btns = {
         text="8 Balls",
         text_color=config.Colors.WHITE,
         font=config.Fonts.menu,
-        pos=(550, 290),
+        pos=(550, 300),
         size=btns_size,
         bg=play_btn_bg,
         target_display=config.gameDisplay,
@@ -29,7 +28,7 @@ btns = {
         text="9 Balls",
         text_color=config.Colors.WHITE,
         font=config.Fonts.menu,
-        pos=(550, 415),
+        pos=(550, 395),
         size=btns_size,
         bg=play_btn_bg,
         target_display=config.gameDisplay,
@@ -39,7 +38,7 @@ btns = {
         text="Tutorial",
         text_color=config.Colors.WHITE,
         font=config.Fonts.menu,
-        pos=(550, 540),
+        pos=(550, 490),
         size=btns_size,
         bg=play_btn_bg,
         target_display=config.gameDisplay,
@@ -49,7 +48,7 @@ btns = {
         text="Exit",
         text_color=config.Colors.WHITE,
         font=config.Fonts.menu,
-        pos=(550, 665),
+        pos=(550, 585),
         size=btns_size,
         bg=exit_btn_bg,
         target_display=config.gameDisplay,
@@ -63,12 +62,17 @@ def menu():
 
     This function is responsible for displaying the main menu of the game.
     """
-    global click, config
+    from utils import draw_main_menu_game_title, draw_background_border
+    import config
+    global click
     while True:
+
         config.gameDisplay.fill((0, 130, 0))
 
+        draw_background_border(config.gameDisplay)
+
         # Draw game title on screen
-        draw_main_menu_game_title(config.gameDisplay)
+        draw_main_menu_game_title(config.gameDisplay, base_y=150, scale=0.8)
 
         # Draw buttons on screen
         for btn in btns.values():

@@ -16,6 +16,8 @@ def restart_game():
     
 def draw(winner: Player):
     """Draw the pause menu and handle events."""
+    from utils import draw_background_border
+
     btns_size = (400, 100)
     play_btn_bg = pygame.image.load('images/menu_normal_btn_bg.png').convert_alpha()
     play_btn_bg = pygame.transform.scale(play_btn_bg, btns_size)
@@ -55,7 +57,7 @@ def draw(winner: Player):
                     if btn.rect.collidepoint((mx, my)):
                         btn.on_click()
 
-        config.gameDisplay.fill((0, 130, 0))
+        draw_background_border(config.gameDisplay)
 
         pygame.draw.rect(config.gameDisplay, config.Colors.FELT, (470, 340, 460, 320), border_radius=15)
         draw_main_menu_game_title(config.gameDisplay, 180, 0.8)

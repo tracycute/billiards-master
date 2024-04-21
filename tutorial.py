@@ -1,7 +1,6 @@
 import pygame
 import sys
 import config
-from utils import draw_main_menu_game_title
 from components import Button
 
 pygame.init()
@@ -20,10 +19,12 @@ tutorial_text = [
 
 
 def draw_background():
-    global config
-    config.gameDisplay.fill((0, 130, 0))
-    pygame.draw.rect(config.gameDisplay, config.Colors.FELT, (200, 150, 1000, 500), border_radius=15)
-    draw_main_menu_game_title(config.gameDisplay, scale=0.5)
+    from utils import draw_main_menu_game_title, draw_background_border
+    import config
+
+    draw_background_border(config.gameDisplay)
+    pygame.draw.rect(config.gameDisplay, config.Colors.FELT, (200, 175, 1000, 500), border_radius=15)
+    draw_main_menu_game_title(config.gameDisplay, base_y=150, scale=0.5)
 
 
 def draw_text_tutorial(text, color, surface, x, y):
@@ -46,7 +47,7 @@ def draw_text_tutorial(text, color, surface, x, y):
 while True:
     draw_background()
     n_char_wrap = 90
-    y = 200
+    y = 250
     for text in tutorial_text:
 
         words = text.split(' ')
@@ -59,7 +60,7 @@ while True:
             lines.append(line)
 
         for line in lines:
-            draw_text_tutorial(line, config.Colors.WHITE, config.gameDisplay, 230, y)
+            draw_text_tutorial(line, config.Colors.WHITE, config.gameDisplay, 235, y)
             y += 50
 
         # extra space between paragraphs

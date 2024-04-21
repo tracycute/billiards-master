@@ -12,6 +12,8 @@ def continue_game():
 
 def draw_pause_menu():
     """Draw the pause menu and handle events."""
+    from utils import draw_background_border
+
     btns_size = (400, 100)
     pause_text_size = (300, 80)
     play_btn_bg = pygame.image.load('images/menu_normal_btn_bg.png').convert_alpha()
@@ -61,7 +63,7 @@ def draw_pause_menu():
         }
 
 
-        config.gameDisplay.fill((0, 130, 0))
+        draw_background_border(config.gameDisplay)
         pygame.draw.rect(config.gameDisplay, config.Colors.FELT, (475, 360, 450, 300), border_radius=15)
         draw_main_menu_game_title(config.gameDisplay, 180, 0.8)
         
