@@ -93,8 +93,8 @@ while True:
         for ball in recent_potted_balls:
             if ball.color == 'stripes':
                 stripes += 1
-                if initial_break:
-                    initial_break = False
+                if config.initial_break:
+                    config.initial_break = False
                     turn_change = False
                     if player_turn.number == 1:
                         player_1.color = 'stripes'
@@ -104,8 +104,8 @@ while True:
                         player_1.color = 'solids'
             elif ball.color == 'solids':
                 solids += 1
-                if initial_break:
-                    initial_break = False
+                if config.initial_break:
+                    config.initial_break = False
                     turn_change = False
                     if player_turn.number == 1:
                         player_1.color = 'solids'
