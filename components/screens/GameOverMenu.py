@@ -25,7 +25,7 @@ def draw(winner: Player):
             text="PLAY AGAIN",
             text_color=config.Colors.WHITE,
             font=config.Fonts.menu,
-            pos=(500, 425),
+            pos=(500, 435),
             size=btns_size,
             bg=play_btn_bg,
             target_display=config.gameDisplay,
@@ -35,7 +35,7 @@ def draw(winner: Player):
             text="Exit",
             text_color=config.Colors.WHITE,
             font=config.Fonts.menu,
-            pos=(500, 535),
+            pos=(500, 545),
             size=btns_size,
             bg=play_btn_bg,
             target_display=config.gameDisplay,
@@ -57,11 +57,11 @@ def draw(winner: Player):
 
         config.gameDisplay.fill((0, 130, 0))
 
-        pygame.draw.rect(config.gameDisplay, config.Colors.FELT, (475, 360, 450, 300), border_radius=15)
+        pygame.draw.rect(config.gameDisplay, config.Colors.FELT, (470, 340, 460, 320), border_radius=15)
         draw_main_menu_game_title(config.gameDisplay, 180, 0.8)
 
         # Draw the winner
-        winner_text = config.Fonts.menu.render(f'{winner.number} wins!', True, config.Colors.WHITE)
+        winner_text = config.Fonts.menu.render(f'PLAYER {winner.number} WINS', True, config.Colors.YELLOW)
         config.gameDisplay.blit(winner_text, (500, 350))
 
         for b in btns:

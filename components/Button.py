@@ -29,7 +29,7 @@ class Button:
         text_rect = text.get_rect()
 
         x = self.pos[0] + (self.size[0] // 2)
-        y = self.pos[1] + (self.size[1] // 2)
+        y = self.pos[1] + (self.size[1] // 2) - 5
         text_rect.center = (x, y)
 
         self.target_display.blit(text, text_rect)
