@@ -21,10 +21,9 @@ def game_over(winner):
     config.game_is_paused = True
     GameOverMenu.draw(winner)
 
-    config.cue_ball_in_hand = False
-
 
 while True:
+    print(config.recent_balls_9)
     draw_background()
     gameDisplay.blit(config.Fonts.basic.render('PLAYER ' + str(player_turn.number) + '\'S TURN', 1, Colors.WHITE), (600, 10))
     draw_potted_balls()
@@ -102,10 +101,10 @@ while True:
                 cue_ball_in_hand = True
         else :  
             if first_ball_collided_with is not None:
-                if not first_ball_collided_with.color == recent_balls_9[0] :
+                if not first_ball_collided_with.color == config.recent_balls_9[0] :
                     cue_ball_in_hand = True
                     turn_change = True
-                elif first_ball_collided_with.color == recent_balls_9[0]:
+                elif first_ball_collided_with.color == config.recent_balls_9[0]:
                         if check_collision_recent_ball_9 == 1:
                             turn_change = True
             else:
@@ -115,25 +114,25 @@ while True:
         
         # CHECKS POTTED BALLS AFTER EACH TURN
         for ball in recent_potted_balls:
-            if ball.color == recent_balls_9[0] and ball.color != "" and ball.color != "nine":
+            if ball.color == config.recent_balls_9[0] and ball.color != "" and ball.color != "nine":
                 turn_change = False
                 cue_ball_in_hand = False
-                recent_balls_9.remove(ball.color)
+                config.recent_balls_9.remove(ball.color)
 
-            elif ball.color != recent_balls_9[0] and ball.color != "" and ball.color != "nine":
-                if first_ball_collided_with.color == recent_balls_9[0] and check_collision_recent_ball_9 == False:
+            elif ball.color != config.recent_balls_9[0] and ball.color != "" and ball.color != "nine":
+                if first_ball_collided_with.color == config.recent_balls_9[0] and check_collision_recent_ball_9 == False:
                     turn_change = False
                     cue_ball_in_hand = False
-                    recent_balls_9.remove(ball.color)
+                    config.recent_balls_9.remove(ball.color)
                     check_collision_recent_ball_9 = True
                 else:
                     turn_change = True
-                    recent_balls_9.remove(ball.color)
+                    config.recent_balls_9.remove(ball.color)
                     cue_ball_in_hand = True
         
             elif ball.color == "nine":
-                if len(recent_balls_9) == 9:
-                    if first_ball_collided_with.color == recent_balls_9[0]:
+                if len(config.recent_balls_9) == 9:
+                    if first_ball_collided_with.color == config.recent_balls_9[0]:
                         winner = player_turn
                         
                     elif first_ball_collided_with.color == "nine":
@@ -143,7 +142,7 @@ while True:
                         else:
                             winner = player_1
                     
-                if len(recent_balls_9) > 1:
+                if len(config.recent_balls_9) > 1:
                     if player_turn.only_nine_ball_left:
                         if cue_ball.potted or not first_ball_collided_with.color == "nine":
                             if player_turn.number == 1:
@@ -161,6 +160,9 @@ while True:
                             
                         else:
                             winner = player_1
+
+                else:
+                    winner = player_turn
                     
                 game_over(winner)
 

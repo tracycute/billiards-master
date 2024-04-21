@@ -73,7 +73,6 @@ initial_break = True
 cue_ball_in_hand = False
 turn_change = True
 first_ball_collided_with = None
-winner = None
 game_is_paused = False
 prevent_shoot = False
 
