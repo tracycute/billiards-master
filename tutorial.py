@@ -22,7 +22,7 @@ tutorial_text = [
 def draw_background():
     global config
     config.gameDisplay.fill((0, 130, 0))
-    pygame.draw.rect(config.gameDisplay, config.FELT, (200, 150, 1000, 500), border_radius=15)
+    pygame.draw.rect(config.gameDisplay, config.Colors.FELT, (200, 150, 1000, 500), border_radius=15)
     draw_main_menu_game_title(config.gameDisplay, scale=0.5)
 
 
@@ -59,7 +59,7 @@ while True:
             lines.append(line)
 
         for line in lines:
-            draw_text_tutorial(line, config.WHITE, config.gameDisplay, 230, y)
+            draw_text_tutorial(line, config.Colors.WHITE, config.gameDisplay, 230, y)
             y += 50
 
         # extra space between paragraphs
@@ -68,8 +68,8 @@ while True:
     # Draw "back" button
     back_btn = Button(
         text="Back",
-        text_color=config.WHITE,
-        font=fonts['large'],
+        text_color=config.Colors.WHITE,
+        font=config.Fonts.menu_small,
         pos=(100, 75),
         size=(150, 70),
         bg=pygame.transform.scale(

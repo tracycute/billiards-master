@@ -6,30 +6,25 @@ from components.PoolTable import draw_background
 from components.GameState import *
 from components.Collisions import *
 from config import *
-import components.PauseMenu as PauseMenu
+import components.screens.PauseMenu as PauseMenu
 import config
 
 pygame.init()
 
-def game_over():
-    global draw_background
-    while True:
-        for e in pygame.event.get():
-            if e.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-        draw_background()
-        for b in balls:
-            if not b.potted:
-                gameDisplay.blit(b.sprite, (b.x - 18, b.y - 18))
-        gameDisplay.blit(mainFont.render('PLAYER ' + str(winner.color) + ' WINS!', 1, RED), (615, 390))
-        pygame.display.update()
-
-
 winner = None
-while winner is None:
+
+def game_over(winner):
+    """Display the game over screen."""
+    import components.screens.GameOverMenu as GameOverMenu
+    import config
+
+    config.game_is_paused = True
+    GameOverMenu.draw(winner)
+
+
+while True:
     draw_background()
-    gameDisplay.blit(mainFont.render('PLAYER ' + str(player_turn.number) + '\'S TURN', 1, WHITE), (600, 40))
+    gameDisplay.blit(config.Fonts.basic.render('PLAYER ' + str(player_turn.number) + '\'S TURN', 1, Colors.WHITE), (600, 10))
     draw_potted_balls()
     for ball in balls:
         # Ignore potted balls
@@ -46,14 +41,14 @@ while winner is None:
             for i in range(int(ball.speed)):
                 if ball.y - 18 <= 150 or ball.y + 18 >= 650 or ball.x + 18 >= 1200 or ball.x - 18 <= 200:
                     # TODO: PLAY SOUND HERE
-                    if ball.speed > 1:  
+                    if ball.speed > 1:
                         ball.speed -= 1
                     ball.movement_direction = collision_with_wall(
                         ball.x, ball.y, ball.movement_direction)
                     collision_monitor_reset()
                 ball.x, ball.y = angle_to_coordinates(
                     ball.x, ball.y, ball.movement_direction, 1)
-            if ball_potted(ball.x, ball.y):  
+            if ball_potted(ball.x, ball.y):
                 # TODO: PLAY SOUND HERE
                 recent_potted_balls.append(ball)
                 potted_balls.append(ball)
@@ -63,7 +58,7 @@ while winner is None:
                 ball.x, ball.y, ball)
             if ball_collided_with is not None:  
                 # TODO: PLAY SOUND HERE
-                if first_ball_collided_with is None:  
+                if first_ball_collided_with is None:
                     first_ball_collided_with = ball_collided_with
                 ball.movement_direction, ball_collided_with.movement_direction, ball.speed, ball_collided_with.speed = ball_collision_physics(
                     ball.x, ball.y, ball_collided_with.x, ball_collided_with.y, ball.movement_direction, ball.speed)
@@ -132,7 +127,7 @@ while winner is None:
                         winner = player_2
                     else:
                         winner = player_1
-                game_over()
+                game_over(winner)
         recent_potted_balls[:] = []
 
         # kiem tra doi turn 
@@ -187,16 +182,17 @@ while winner is None:
     if not in_play:
         if draw_guide:
             pygame.draw.line(gameDisplay, 
-                             WHITE, 
-                             (cue_ball.x, cue_ball.y), 
-                             mouse_hold_coords, 2)
+                             Colors.WHITE,
+                             (cue_ball.x, cue_ball.y),
+                             mouse_hold_coords, 
+                             2
+                            )
             gameDisplay.blit(pool_cue_rotated, pool_cue_coords)
-            pygame.draw.circle(gameDisplay, WHITE, mouse_hold_coords, 16, 1)
+            pygame.draw.circle(gameDisplay, Colors.WHITE, mouse_hold_coords, 16, 1)
 
         # ve stick
         if mouse_held:
-            mouseX, mouseY = pygame.mouse.get_pos(
-            )[0], pygame.mouse.get_pos()[1]
+            mouseX, mouseY = pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]
             temporary_angle = cue_direction + 180
             if temporary_angle > 360:
                 temporary_angle -= 360
@@ -207,7 +203,7 @@ while winner is None:
             pool_cue_coords = angle_to_coordinates(
                 cue_ball.x - 462, cue_ball.y - 450, temporary_angle, strike_distance)
 
-    
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -227,6 +223,9 @@ while winner is None:
             mouse_hold_coords = pygame.mouse.get_pos()
             mouse_held = True
         elif event.type == pygame.MOUSEBUTTONUP:
+            if config.prevent_shoot:
+                config.prevent_shoot = False
+                break
             mouse_held = False
             if strike_distance > 16:
                 cue_ball.speed = round((strike_distance - 16)/16)

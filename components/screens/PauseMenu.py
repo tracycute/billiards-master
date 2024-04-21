@@ -1,4 +1,5 @@
 import sys
+import time
 import pygame
 
 from components import Button
@@ -7,6 +8,7 @@ import config
 
 def continue_game():
     config.game_is_paused = False
+    config.prevent_shoot = True
 
 def draw_pause_menu():
     """Draw the pause menu and handle events."""
@@ -38,8 +40,8 @@ def draw_pause_menu():
         btns = {
             'continue': Button(
                 text="CONTINUE",
-                text_color=config.WHITE,
-                font=config.menuFont,
+                text_color=config.Colors.WHITE,
+                font=config.Fonts.menu,
                 pos=(500, 425),
                 size=btns_size,
                 bg=play_btn_bg,
@@ -48,8 +50,8 @@ def draw_pause_menu():
             ),
             'exit': Button(
                 text="Exit",
-                text_color=config.WHITE,
-                font=config.menuFont,
+                text_color=config.Colors.WHITE,
+                font=config.Fonts.menu,
                 pos=(500, 535),
                 size=btns_size,
                 bg=play_btn_bg,
@@ -60,7 +62,7 @@ def draw_pause_menu():
 
 
         config.gameDisplay.fill((0, 130, 0))
-        pygame.draw.rect(config.gameDisplay, config.FELT, (475, 360, 450, 300), border_radius=15)
+        pygame.draw.rect(config.gameDisplay, config.Colors.FELT, (475, 360, 450, 300), border_radius=15)
         draw_main_menu_game_title(config.gameDisplay, 180, 0.8)
         
         for b in btns:
@@ -68,8 +70,8 @@ def draw_pause_menu():
         
         pause_text = Button(
             text="PAUSED",
-            text_color=config.WHITE,
-            font=config.menuFont,
+            text_color=config.Colors.WHITE,
+            font=config.Fonts.menu,
             pos=(550, 325),
             size=pause_text_size,
             bg=exit_btn_bg,

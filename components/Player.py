@@ -5,3 +5,8 @@ class Player (object):
         self.color = color
         self.only_eight_ball_left = False
         self.only_nine_ball_left = False
+
+    def reset_state(self):
+        self.color = ''
+        self.only_eight_ball_left = False
+        self.only_nine_ball_left = False

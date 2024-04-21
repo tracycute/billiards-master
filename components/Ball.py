@@ -17,3 +17,11 @@ class Ball (object):
         self.collision_monitor = []
         for i in range(16):
             self.collision_monitor.append(False)
+
+    def reset_state(self):
+        self.movement_direction = 0
+        self.speed = 0
+        self.frames = 0
+        self.potted = False
+        for i in range(16):
+            self.collision_monitor[i] = False
