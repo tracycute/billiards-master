@@ -51,7 +51,7 @@ def draw_pause_menu():
                 on_click=lambda: continue_game(),
             ),
             'exit': Button(
-                text="Exit",
+                text="EXIT",
                 text_color=config.Colors.WHITE,
                 font=config.Fonts.menu,
                 pos=(500, 535),

@@ -34,7 +34,7 @@ def draw(winner: Player):
             on_click=restart_game,
         ),
         'exit': Button(
-            text="Exit",
+            text="EXIT",
             text_color=config.Colors.WHITE,
             font=config.Fonts.menu,
             pos=(500, 545),

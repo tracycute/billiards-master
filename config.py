@@ -21,7 +21,7 @@ strike_sound = pygame.mixer.Sound('sounds/strike.wav')
 
 # display
 gameDisplay = pygame.display.set_mode((1400, 800))
-pygame.display.set_caption('Billiard Master')
+pygame.display.set_caption('Billiards Master')
 clock = pygame.time.Clock()
 
 
