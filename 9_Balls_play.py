@@ -41,7 +41,7 @@ while True:
             for i in range(int(ball.speed)):
                 # checks collides with a wall
                 if ball.y - 18 <= 150 or ball.y + 18 >= 650 or ball.x + 18 >= 1200 or ball.x - 18 <= 200:
-                    # TODO: PLAY SOUND HERE
+                    hit_sound.play()
                     if ball.speed > 1: # ball loses speed
                         ball.speed -= 1
                     ball.movement_direction = collision_with_wall(ball.x, ball.y, ball.movement_direction)
@@ -49,7 +49,7 @@ while True:
                 ball.x, ball.y = angle_to_coordinates(
                     ball.x, ball.y, ball.movement_direction, 1)
             if ball_potted(ball.x, ball.y):
-                # TODO: PLAY SOUND HERE
+                sunk_sound.play()
                 recent_potted_balls.append(ball)
                 potted_balls.append(ball)
                 ball.potted = True
@@ -57,7 +57,7 @@ while True:
             ball_collided_with = check_collision_with_other_ball_9(
                 ball.x, ball.y, ball)
             if ball_collided_with is not None:
-                # TODO: PLAY SOUND HERE
+                hit_sound.play()
                 if first_ball_collided_with is None:
                     first_ball_collided_with = ball_collided_with
                 ball.movement_direction, ball_collided_with.movement_direction, ball.speed, ball_collided_with.speed = ball_collision_physics(ball.x, ball.y, ball_collided_with.x, ball_collided_with.y, ball.movement_direction, ball.speed)
@@ -234,7 +234,7 @@ while True:
                 cue_ball.speed = round((strike_distance - 10)/10)
                 in_play = True
                 draw_guide = False
-                # TODO: PLAY SOUND HERE
+                strike_sound.play()
             cue_ball.movement_direction = cue_direction
             collision_monitor_reset_9()
 

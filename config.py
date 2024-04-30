@@ -14,6 +14,10 @@ class Fonts:
     menu = pygame.font.Font(path_menu, 50)
     menu_small = pygame.font.Font(path_menu, 30)
 
+# sounds
+hit_sound = pygame.mixer.Sound('sounds/hit.wav')
+sunk_sound = pygame.mixer.Sound('sounds/sunk.ogg')
+strike_sound = pygame.mixer.Sound('sounds/strike.wav')
 
 # display
 gameDisplay = pygame.display.set_mode((1400, 800))
