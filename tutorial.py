@@ -12,7 +12,7 @@ fonts = {
 }
 
 tutorial_text = [
-    "/bObjective: Billiard Master is a classic billiards game, in which the player's main goal is to get the cue ball to hit the remaining object balls to achieve the highest score.",
+    "/bObjective: Billiards Master is a classic billiards game, in which the player's main goal is to get the cue ball to hit the remaining object balls to achieve the highest score.",
     "/bRules: Players will use the cue stick to hit the cue ball, push it to hit other balls on the table. The goal is to get the white ball to hit the object balls to put them in the pockets on the table.",
     "/bForm /bof /bplay: There can be many different forms of play such as 8-balls, 9-balls. Each form has its own rules and scoring methods."
 ]

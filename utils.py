@@ -22,7 +22,7 @@ def draw_main_menu_game_title(surface, base_y=100, scale=1.0):
 
     color = (255, 255, 255)
 
-    textobj = title_font_1.render("BILLIARD", 1, color)
+    textobj = title_font_1.render("BILLIARDS", 1, color)
     textrect = textobj.get_rect()
     textrect.center = (700, base_y)
     surface.blit(textobj, textrect)
