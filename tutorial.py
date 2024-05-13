@@ -19,6 +19,9 @@ tutorial_text = [
 
 
 def draw_background():
+    """
+    Vẽ nền cho màn hình hướng dẫn.
+    """
     from utils import draw_main_menu_game_title, draw_background_border
     import config
 
@@ -28,15 +31,25 @@ def draw_background():
 
 
 def draw_text_tutorial(text, color, surface, x, y):
+    """
+    Vẽ văn bản cho màn hình hướng dẫn.
+
+    Tham số:
+        text (str): Nội dung văn bản.
+        color ((int, int, int)): Màu của văn bản dưới dạng bộ ba giá trị RGB.
+        surface (pygame.Surface): Chỗ mà văn bản được vẽ.
+        x (int): Tọa độ x của văn bản.
+        y (int): Tọa độ y của văn bản.
+    """
     global fonts
     words = text.split(' ')
-    space = fonts['normal'].size(' ')[0]  # The width of a space.
+    space = fonts['normal'].size(' ')[0]  # Khoảng cách giữa các từ
     for word in words:
-        # If the word starts with "/b", render it in bold.
+        # Nếu từ bắt đầu bằng "/b", vẽ nó dưới dạng đậm.
         if word.startswith("/b"):
             word = word[2:]
             word_surface = fonts['bold'].render(word, 0, color)
-        # Otherwise, render it normally.
+        # Không thì vẽ nó dưới dạng bình thường.
         else:
             word_surface = fonts['normal'].render(word, 0, color)
         word_width, _ = word_surface.get_size()
@@ -63,10 +76,10 @@ while True:
             draw_text_tutorial(line, config.Colors.WHITE, config.gameDisplay, 235, y)
             y += 50
 
-        # extra space between paragraphs
+        # Tăng khoảng cách giữa các đoạn văn bản
         y += 15
 
-    # Draw "back" button
+    # Vẽ nút "Back"
     back_btn = Button(
         text="Back",
         text_color=config.Colors.WHITE,

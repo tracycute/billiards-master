@@ -2,7 +2,9 @@ import pygame
 import config
 
 def draw_background():
-    """Draws the background of the pool table."""
+    """
+    Hàm này được sử dụng để vẽ nền của bàn bi-a, bao gồm việc vẽ bàn bi-a, các lỗ trên bàn, và thông tin về người chơi.
+    """
     global config
     config.gameDisplay.fill(config.Colors.BROWN)
     pygame.draw.rect(config.gameDisplay, config.Colors.FELT, (200, 150, 1000, 500))
@@ -11,7 +13,7 @@ def draw_background():
     for hole in config.holes: 
         pygame.draw.circle(config.gameDisplay, config.Colors.BLACK, hole, 22)
     
-    # Draw players info
+    # Vẽ thông tin người chơi
     p1_color = config.player_1.color
     p2_color = config.player_2.color
     config.gameDisplay.blit(config.Fonts.basic.render('PLAYER 1', 1, config.Colors.P1), (20, 10))

@@ -14,35 +14,41 @@ winner = None
 
 
 def game_over(winner):
-    """Display the game over screen."""
+    """
+    Hiển thị màn hình kết thúc trò chơi.
+
+    Tham số:
+    - winner: Người chơi chiến thắng.
+    """
     import components.screens.GameOverMenu as GameOverMenu
     import config
 
     config.game_is_paused = True
     GameOverMenu.draw(winner)
 
-
+# Vòng lặp chính của trò chơi
 while True:
     draw_background()
     gameDisplay.blit(config.Fonts.basic.render('PLAYER ' + str(player_turn.number) + '\'S TURN', 1, Colors.WHITE), (600, 10))
     draw_potted_balls()
     for ball in balls_9:
-        # Ignore potted balls
+        # Bỏ qua các quả bi đã rơi vào lỗ
         if ball.potted:
             continue
 
         gameDisplay.blit(ball.sprite, (ball.x - 18, ball.y - 18))
 
-        # Nothing to do if the ball is not in play
+        # Không có gì cần thực hiện nếu quả bi không còn trong trò chơi
         if not in_play:
             continue
 
+        # Di chuyển quả bi theo hướng và tốc độ
         if ball.speed > 0:
             for i in range(int(ball.speed)):
-                # checks collides with a wall
+                # Xử lý va chạm với các bức tường và lỗ
                 if ball.y - 18 <= 150 or ball.y + 18 >= 650 or ball.x + 18 >= 1200 or ball.x - 18 <= 200:
                     hit_sound.play()
-                    if ball.speed > 1: # ball loses speed
+                    if ball.speed > 1: 
                         ball.speed -= 1
                     ball.movement_direction = collision_with_wall(ball.x, ball.y, ball.movement_direction)
                     collision_monitor_reset_9()
@@ -66,17 +72,15 @@ while True:
                 ball.collision_monitor[balls_9.index(ball_collided_with)] = True
                 ball_collided_with.collision_monitor[balls_9.index(ball)] = True
 
-            # FRICTION
-    
-            # decreases speed 
+            # Giảm tốc độ
             if ball.frames >= (-30) * math.log10(0.05 * (ball.speed + 1)):
                 ball.speed -= 1
                 ball.frames = 0
             ball.frames += 1
-            # updates the coordinates 
+            # Cập nhật vị trí của gậy 
             if ball is cue_ball:
                 pool_cue_coords = (cue_ball.x - 462, cue_ball.y - 450)
-        # if ball stop
+        # Kiểm tra nếu tất cả các quả bi đã dừng lại
         if not balls_stopped_9():
             continue
 
@@ -90,8 +94,9 @@ while True:
         
 
 
+        # Xác định xem có  thay đổi lượt và có đặt bi hay không.
         if player_turn.only_nine_ball_left:
-            turn_change = True # doi turn khi bi 9 vao``
+            turn_change = True 
             cue_ball_in_hand = False
             if first_ball_collided_with is not None: 
                 if not first_ball_collided_with.color == 'nine':
@@ -109,9 +114,8 @@ while True:
             else:
                 turn_change = True
                 cue_ball_in_hand = True
-        
-        
-        # CHECKS POTTED BALLS AFTER EACH TURN
+
+        # Xử lý việc rơi bi vào lỗ
         for ball in recent_potted_balls:
             if ball.color == config.recent_balls_9[0] and ball.color != "" and ball.color != "nine":
                 turn_change = False
@@ -168,14 +172,13 @@ while True:
         recent_potted_balls[:] = []
         
         first_ball_collided_with = None
-        # if cue ball is potted
+        # Xử lý việc rơi bi trắng vào lỗ
         if cue_ball.potted:
             potted_balls.remove(cue_ball)
             turn_change = True
             cue_ball.potted = False
             cue_ball_in_hand = True
 
-        # change turn
         if turn_change:
             player_turn = player_turn_switch(player_turn)
 
@@ -187,17 +190,16 @@ while True:
         
         in_play = False
     
-    # AIMING AND STRIKING THE CUE BALL
     if not in_play:
         if draw_guide:
             pygame.draw.line(gameDisplay, config.Colors.WHITE, (cue_ball.x, cue_ball.y), mouse_hold_coords, 2)
             gameDisplay.blit(pool_cue_rotated, pool_cue_coords)
             pygame.draw.circle(gameDisplay, config.Colors.WHITE, mouse_hold_coords, 16, 1)
 
-        # DRAWING CUE
+        # Xử lý việc di chuyển gậy
         if mouse_held:
             mouseX, mouseY = pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]
-            # adjusts angle value if it is greater than 360
+            # Xác định hướng và khoảng cách của cú đánh
             temporary_angle = cue_direction + 180
             if temporary_angle > 360:
                 temporary_angle -= 360
@@ -212,13 +214,13 @@ while True:
             pygame.quit()
             quit()
 
-        # Pause game if 'p' is pressed
+        # Xử lý sự kiện nhấn phím P
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_p:
                 config.game_is_paused = not config.game_is_paused
                 PauseMenu.draw_pause_menu()
 
-        # Don't handle mouse events if the game is in play
+        # Xử lý sự kiện nhấn chuột
         if in_play:
             continue
 

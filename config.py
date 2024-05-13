@@ -5,7 +5,7 @@ pygame.init()
 
 
 class Fonts:
-    """Font constants."""
+    """Font chữ được sử dụng trong trò chơi."""
     path_menu = ".\\fonts\\lemon-regular.TTF"
     path_basic = "freesansbold.ttf"
 
@@ -14,19 +14,19 @@ class Fonts:
     menu = pygame.font.Font(path_menu, 50)
     menu_small = pygame.font.Font(path_menu, 30)
 
-# sounds
+# Âm thanh
 hit_sound = pygame.mixer.Sound('sounds/hit.wav')
 sunk_sound = pygame.mixer.Sound('sounds/sunk.ogg')
 strike_sound = pygame.mixer.Sound('sounds/strike.wav')
 
-# display
+# Màn hình
 gameDisplay = pygame.display.set_mode((1400, 800))
 pygame.display.set_caption('Billiards Master')
 clock = pygame.time.Clock()
 
 
 class Colors:
-    """Color constants."""
+    """Màu sắc được sử dụng trong trò chơi."""
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
     FELT = (4, 105, 36)
@@ -56,33 +56,33 @@ holes = (
     (1190, 640)
 )
 
-# Init players
+# Khởi tạo thông tin về người chơi
 player_1, player_2 = Player(1, ''), Player(2, '')
 player_turn = player_1
 
-# pool cue
+# Gậy đánh
 pool_cue_original = pygame.image.load('images/cue.png').convert_alpha()
 pool_cue_rotated = pygame.transform.rotate(pool_cue_original, 0)
 pool_cue_coords = (0, 0)
 
-# mouse
+# Chuột
 mouse_hold_coords = (0, 0)
 mouse_held = False
 
 strike_distance = 0
 draw_guide = True
 in_play = False
-# check stripes and solids was assigned
+# Kiểm tra xem lượt đánh có phải là lượt đánh đầu tiên không
 initial_break = True
 
-# some setting
+# Một số biến khác
 cue_ball_in_hand = False
 turn_change = True
 first_ball_collided_with = None
 game_is_paused = False
 prevent_shoot = False
 
-# Balls
+# Bi cơ
 cue_ball = Ball('', 450, 400, 'images/ball0.png')
 cue_direction = 0
 
@@ -156,6 +156,11 @@ check_collision_recent_ball_9 = False
 
 
 def init_game_states():
+    """
+    Khởi tạo lại trạng thái của trò chơi.
+
+    Reset các biến và đối tượng liên quan đến trạng thái của trò chơi về trạng thái ban đầu.
+    """
     global player_1, player_2, player_turn, \
         pool_cue_original, pool_cue_rotated, pool_cue_coords,\
         mouse_hold_coords, mouse_held, strike_distance, draw_guide, in_play, initial_break,\
@@ -164,10 +169,12 @@ def init_game_states():
         recent_balls_9, check_collision_recent_ball_9, \
         game_is_paused
 
+    # Reset thông tin về người chơi
     player_1.reset_state()
     player_2.reset_state()
     player_turn = player_1
 
+    # Reset thông tin về gậy đánh và chuột
     pool_cue_original = pygame.image.load('images/cue.png').convert_alpha()
     pool_cue_rotated = pygame.transform.rotate(pool_cue_original, 0)
 
@@ -176,17 +183,20 @@ def init_game_states():
     mouse_hold_coords = (0, 0)
     mouse_held = False
 
+    # Reset thông tin về cú đánh và hướng đánh
     strike_distance = 0
     draw_guide = True
 
+    # Reset trạng thái trò chơi
     in_play = False
     initial_break = True
 
+    # Reset thông tin về bi cơ và lượt đánh
     cue_ball_in_hand = False
     turn_change = True
     first_ball_collided_with = None
 
-    # reset balls position
+    # Reset thông tin về bi và lỗ
     cue_ball.x, cue_ball.y = 450, 400
 
     for i, ball in enumerate(balls):
@@ -198,6 +208,7 @@ def init_game_states():
         ball.x, ball.y = balls_9_initial_pos[i]
 
 
+    # Reset thông tin về các bi đã rơi
     recent_potted_balls = []
     potted_balls = []
     recent_balls_9 = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]

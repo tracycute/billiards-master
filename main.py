@@ -58,9 +58,9 @@ btns = {
 
 
 def menu():
-    """Main menu of the game.
+    """Màn hình chính của game
 
-    This function is responsible for displaying the main menu of the game.
+    Hiển thị các nút chức năng chính của game.
     """
     from utils import draw_main_menu_game_title, draw_background_border
     import config
@@ -71,14 +71,14 @@ def menu():
 
         draw_background_border(config.gameDisplay)
 
-        # Draw game title on screen
+        # Vẽ tiêu đề của game
         draw_main_menu_game_title(config.gameDisplay, base_y=150, scale=0.8)
 
-        # Draw buttons on screen
+        # Vẽ các nút chức năng
         for btn in btns.values():
             btn.draw()
 
-        # Check if any button is clicked
+        # Kiểm tra xem người chơi đã click vào nút nào chưa
         mx, my = pygame.mouse.get_pos()
         for btn in btns.values():
             if btn.rect.collidepoint((mx, my)):
@@ -87,7 +87,7 @@ def menu():
 
         click = False
 
-        # Check if user wants to quit
+        # Kiểm tra sự kiện thoát game
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()

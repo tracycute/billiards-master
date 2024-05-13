@@ -4,18 +4,15 @@ import config
 
 def draw_main_menu_game_title(surface, base_y=100, scale=1.0):
     """
-    Draw the game title on the main menu.
+    Vẽ tiêu đề của trò chơi trên màn hình chính.
 
-    Parameters
-    ----------
-    surface: pygame.Surface, required
-        The surface to draw the title on.
+    Tham số:
+    surface: pygame.Surface, Chỗ mà tiêu đề được vẽ.
 
-    base_y: int, optional, default 100
-        The y-coordinate of the base of the title.
 
-    scale: float, optional, default 1.0
-        The scale of the title.
+    base_y: int, optional, default 100, Tọa độ y của tiêu đề trên màn hình.
+
+    scale: float, optional, default 1.0, Tỉ lệ phóng to hoặc thu nhỏ của tiêu đề.
     """
     title_font_1 = pygame.font.Font(config.Fonts.path_menu, int(100 * scale))
     title_font_2 = pygame.font.Font(config.Fonts.path_menu, int(120 * scale))
@@ -35,12 +32,12 @@ def draw_main_menu_game_title(surface, base_y=100, scale=1.0):
 
 def draw_background_border(surface):
     """
-    Draw the border of the pool table.
+    Vẽ viền cho màn hình chính.
     """
-    # Draw the background
+    # Vẽ màu nền cho màn hình
     surface.fill((0, 130, 0))
 
-    # top border
+    # Vẽ viền cho màn hình
     pygame.draw.rect(surface, config.Colors.BRONZE, (0, 0, 1400, 60))
     pygame.draw.rect(surface, config.Colors.BRONZE, (0, 740, 1400, 60))
     pygame.draw.rect(surface, config.Colors.BRONZE, (0, 0, 60, 800))
