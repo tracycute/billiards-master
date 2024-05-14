@@ -11,7 +11,9 @@ def continue_game():
     config.prevent_shoot = True
 
 def draw_pause_menu():
-    """Draw the pause menu and handle events."""
+    """
+    Vẽ menu tạm dừng và quản lý các sự kiện.
+    """
     from utils import draw_background_border
 
     btns_size = (400, 100)
@@ -33,7 +35,7 @@ def draw_pause_menu():
                     if btn.rect.collidepoint((mx, my)):
                         btn.on_click()
 
-            # Unpause game if 'p' is pressed
+            # Tiếp tục trò chơi khi nhấn phím 'p'
             if e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_p:
                     continue_game()

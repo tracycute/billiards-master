@@ -7,6 +7,9 @@ from components import Player
 import config
 
 def restart_game():
+    """
+    Đặt lại trạng thái của trò chơi và thiết lập các cờ cần thiết để khởi động lại trò chơi.
+    """
     config.init_game_states()
 
     print('states are reset')
@@ -15,7 +18,11 @@ def restart_game():
 
     
 def draw(winner: Player):
-    """Draw the pause menu and handle events."""
+    """
+    Vẽ menu kết thúc trò chơi và quản lý các sự kiện.
+
+    Tham số: winner - Đối tượng Player, đại diện cho người chơi đã thắng trò chơi.
+    """
     from utils import draw_background_border
 
     btns_size = (400, 100)
@@ -62,7 +69,7 @@ def draw(winner: Player):
         pygame.draw.rect(config.gameDisplay, config.Colors.FELT, (470, 340, 460, 320), border_radius=15)
         draw_main_menu_game_title(config.gameDisplay, 180, 0.8)
 
-        # Draw the winner
+        # Thông báo người chiến thắng
         winner_text = config.Fonts.menu.render(f'PLAYER {winner.number} WINS', True, config.Colors.YELLOW)
         config.gameDisplay.blit(winner_text, (500, 350))
 
