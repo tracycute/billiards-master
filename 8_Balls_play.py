@@ -48,7 +48,7 @@ while True:
                 # Xử lý va chạm với các bức tường và lỗ
                 if ball.y - 18 <= 150 or ball.y + 18 >= 650 or ball.x + 18 >= 1200 or ball.x - 18 <= 200:
                     hit_sound.play()
-                    if ball.speed > 1:
+                    if ball.speed > 1: # bi giảm tốc độ
                         ball.speed -= 1
                     ball.movement_direction = collision_with_wall(
                         ball.x, ball.y, ball.movement_direction)
@@ -190,12 +190,14 @@ while True:
             if number_of_balls_potted(player_turn.color) == 7:
                 player_turn.only_eight_ball_left = True
         first_ball_collided_with = None
+        # Xử lý việc rơi bi trắng vào lỗ
         if cue_ball.potted:
             potted_balls.remove(cue_ball)
             turn_change = True
             cue_ball.potted = False
             cue_ball_in_hand = True
 
+        # Đổi lượt
         if turn_change:
             player_turn = player_turn_switch(player_turn)
         if cue_ball_in_hand:
@@ -205,7 +207,6 @@ while True:
 
         in_play = False
 
-    # Vẽ gậy và hướng dẫn 
     if not in_play:
         if draw_guide:
             pygame.draw.line(gameDisplay, 
@@ -217,9 +218,10 @@ while True:
             gameDisplay.blit(pool_cue_rotated, pool_cue_coords)
             pygame.draw.circle(gameDisplay, Colors.WHITE, mouse_hold_coords, 16, 1)
 
-        # Xử lý hướng và tốc độ của quả bi
+        # Xử lý việc di chuyển gậy
         if mouse_held:
             mouseX, mouseY = pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]
+            # Xác định hướng và khoảng cách của cú đánh
             temporary_angle = cue_direction + 180
             if temporary_angle > 360:
                 temporary_angle -= 360
@@ -236,7 +238,7 @@ while True:
             pygame.quit()
             sys.exit()
 
-        # Tạm dừng trò chơi
+        # Xử lý sự kiện nhấn phím P
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_p:
                 config.game_is_paused = not config.game_is_paused

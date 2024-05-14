@@ -94,7 +94,7 @@ while True:
         
 
 
-        # Xác định xem có  thay đổi lượt và có đặt bi hay không.
+        # Xác định xem có thay đổi lượt và có đặt bi hay không.
         if player_turn.only_nine_ball_left:
             turn_change = True 
             cue_ball_in_hand = False
