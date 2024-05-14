@@ -22,7 +22,7 @@ btns = {
         size=btns_size,
         bg=play_btn_bg,
         target_display=config.gameDisplay,
-        on_click=lambda: exec(open('8_Balls_play.py').read()),
+        on_click=lambda: exec(open('8_Balls_play.py', encoding='utf-8').read()),
     ),
     '9 Balls': Button(
         text="9 Balls",
@@ -32,7 +32,7 @@ btns = {
         size=btns_size,
         bg=play_btn_bg,
         target_display=config.gameDisplay,
-        on_click=lambda: exec(open('9_Balls_play.py').read()),
+        on_click=lambda: exec(open('9_Balls_play.py', encoding='utf-8').read()),
     ),
     'Tutorial': Button(
         text="Tutorial",
@@ -42,7 +42,7 @@ btns = {
         size=btns_size,
         bg=play_btn_bg,
         target_display=config.gameDisplay,
-        on_click=lambda: exec(open('tutorial.py').read()),
+        on_click=lambda: exec(open('tutorial.py', encoding='utf-8').read()),
     ),
     'Exit': Button(
         text="Exit",

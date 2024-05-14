@@ -97,7 +97,7 @@ while True:
 
     if back_btn.rect.collidepoint((mx, my)):
         if pygame.mouse.get_pressed()[0]:
-            exec(open('main.py').read())
+            exec(open('main.py', encoding='utf-8').read())
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
